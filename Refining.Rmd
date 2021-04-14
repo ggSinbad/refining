@@ -1,0 +1,238 @@
+---
+title: "Refining"
+author: "Alexander Maximiliano Castro Fuentes"
+date: "30/10/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r cars}
+
+library(markovchain)
+
+
+```
+
+
+```{r}
+
+ProbabilityCalculator <- function(Level, SuccessRate, Enriched){
+  
+  if (Enriched == FALSE){
+    print((1 - SuccessRate)/10)#chance of destroying
+    return((1 - SuccessRate) * 0.9 / Level)#chance of falling down to each level
+  }
+  if (Enriched == TRUE){
+  
+    if (Level == 4){
+      return((1 - SuccessRate) * 0.978 / Level)#chance of falling down to each level
+      return(1 - SuccessRate)
+    }
+    if (Level == 5){
+      return((1 - SuccessRate) * 0.975 / Level)
+      return(1 - SuccessRate)
+    }
+    if (Level == 6){
+      return((1 - SuccessRate) * 0.971 / Level)
+      return(1 - SuccessRate)
+    }
+    if (Level == 7){
+      return((1 - SuccessRate) * 0.967 / Level)
+      return(1 - SuccessRate)
+    }
+    if (Level == 8){
+      return((1 - SuccessRate) * 0.96 / Level)
+      return(1 - SuccessRate)
+    }
+    if (Level == 9){
+      return((1 - SuccessRate) * 0.95 / Level)
+      return(1 - SuccessRate)
+    }
+  }
+}
+```
+
+
+
+```{r}
+
+ProbabilityCalculator2 <- function(Level, Enriched){
+  
+  EnrichedSuccessChance <- c(1 , 1 , 1 , 0.9629 , 0.784 , 0.561 , 0.3627 , 0.2372 , 0.1472 , 0.0904)
+  EnrichedBreakChance <- c()
+  StandardSuccessChance <- c(1 , 1 , 1 , 1 , 0.612 , 0.3672 , 0.2203 , 0.1296 , 0.0792 , 0.476)
+  
+  
+  if (Enriched == FALSE){
+    print((1 - StandardSuccessChance[Level + 1])/10)#chance of destroying
+    return((1 - StandardSuccessChance[Level + 1]) * 0.9 / Level)#chance of falling down to each level
+  }
+  if (Enriched == TRUE){
+  
+    if (Level == 4){
+      return((1 - EnrichedSuccessChance[Level]) * 0.978 / Level)#chance of falling down to each level
+      return(1 - EnrichedSuccessChance[Level])
+    }
+    if (Level == 5){
+      return((1 - EnrichedSuccessChance[Level]) * 0.975 / Level)
+      return(1 - EnrichedSuccessChance[Level])
+    }
+    if (Level == 6){
+      return((1 - EnrichedSuccessChance[Level]) * 0.971 / Level)
+      return(1 - EnrichedSuccessChance[Level])
+    }
+    if (Level == 7){
+      return((1 - EnrichedSuccessChance[Level]) * 0.967 / Level)
+      return(1 - EnrichedSuccessChance[Level])
+    }
+    if (Level == 8){
+      return((1 - EnrichedSuccessChance[Level]) * 0.96 / Level)
+      return(1 - EnrichedSuccessChance[Level])
+    }
+    if (Level == 9){
+      return((1 - EnrichedSuccessChance[Level]) * 0.95 / Level)
+      return(1 - EnrichedSuccessChance[Level])
+    }
+  }
+}
+```
+
+
+
+
+```{r}
+
+
+#Transition Matrix for Whitesmith refining Level 4 Weapon
+
+
+
+Destroyed <-  t(c(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0))
+
+LevelZero <-  t(c(0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0))
+
+LevelOne <-   t(c(0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0))
+
+LevelTwo <-   t(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0))
+
+LevelThree <- t(c(0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0))
+
+LevelFour <-  t(c(0.0388, 0.0873, 0.0873, 0.0873, 0.0873, 0, 0.612, 0, 0, 0, 0, 0))
+
+LevelFive <-  t(c(0.06328, 0.113904, 0.113904, 0.113904, 0.113904, 0.113904, 0, 0.3672, 0, 0, 0, 0))
+
+LevelSix <-   t(c(0.07797, 0.116955, 0.116955, 0.116955, 0.116955, 0.116955, 0.116955, 0, 0.2203, 0, 0, 0))
+
+LevelSeven <- t(c(0.08679, 0.78111 / 7, 0.78111 / 7, 0.78111 / 7, 0.78111 / 7, 0.78111 / 7, 0.78111 / 7, 0.78111 / 7, 0, 0.1321, 0, 0))
+
+LevelEight <- t(c(0.09208, 0.10359, 0.10359, 0.10359, 0.10359, 0.10359, 0.10359, 0.10359, 0.10359, 0, 0.0792, 0))
+
+LevelNine <-  t(c(0.09524, 0.85716 / 9, 0.85716 / 9, 0.85716 / 9, 0.85716 / 9, 0.85716 / 9, 0.85716 / 9, 0.85716 / 9, 0.85716 / 9, 0.85716 / 9, 0, 0.0476))
+
+LevelTen <-   t(c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1))
+
+
+
+TotalMatrix <- rbind(Destroyed , LevelZero , LevelOne , LevelTwo , LevelThree , LevelFour , LevelFive , LevelSix , LevelSeven , LevelEight , LevelNine , LevelTen)
+
+```
+
+
+
+```{r}
+
+#Transition Matrix for Enriched Oridecons
+
+
+Destroyed <-  t(c(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0))
+
+LevelZero <-  t(c(0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0))
+
+LevelOne <-   t(c(0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0))
+
+LevelTwo <-   t(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0))
+
+LevelThree <- t(c(0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0))
+
+LevelFour <-  t(c(0.0388, 0.0873, 0.0873, 0.0873, 0.0873, 0, 0.612, 0, 0, 0, 0, 0))
+
+LevelFive <-  t(c(0.06328, 0.113904, 0.113904, 0.113904, 0.113904, 0.113904, 0, 0.3672, 0, 0, 0, 0))
+
+LevelSix <-   t(c(0.07797, 0.116955, 0.116955, 0.116955, 0.116955, 0.116955, 0.116955, 0, 0.2203, 0, 0, 0))
+
+LevelSeven <- t(c(0.08679, 0.78111 / 7, 0.78111 / 7, 0.78111 / 7, 0.78111 / 7, 0.78111 / 7, 0.78111 / 7, 0.78111 / 7, 0, 0.1321, 0, 0))
+
+LevelEight <- t(c(0.09208, 0.10359, 0.10359, 0.10359, 0.10359, 0.10359, 0.10359, 0.10359, 0.10359, 0, 0.0792, 0))
+
+LevelNine <-  t(c(0.09524, 0.85716 / 9, 0.85716 / 9, 0.85716 / 9, 0.85716 / 9, 0.85716 / 9, 0.85716 / 9, 0.85716 / 9, 0.85716 / 9, 0.85716 / 9, 0, 0.0476))
+
+LevelTen <-   t(c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1))
+
+
+  
+  
+#How to construct using a function
+
+
+```
+
+
+
+
+
+```{r}
+
+
+EnrichedSuccessChance <- c(1 , 1 , 1 , 0.9629 , 0.784 , 0.561 , 0.3627 , 0.2372 , 0.1472 , 0.0904)
+
+
+for (i in 4:9){
+  print(ProbabilityCalculator(i , EnrichedSuccessChance[i] , TRUE))
+}
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+
+#Using our TotalMatrix to make a markov chain from the markovchain package
+
+
+
+mcRefining <- new("markovchain" , states = c("Destroyed" , "No Refine" , "+1" , "+2" , "+3" , "+4" , "+5" , "+6" , "+7" , "+8" , "+9" , "+10") , byrow = TRUE , transitionMatrix = TotalMatrix , name = "Refining")
+
+
+hitprob <- hittingProbabilities(mcRefining)
+
+```
+
