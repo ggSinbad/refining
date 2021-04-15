@@ -12,56 +12,16 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ```{r}
-
 library(markovchain)
-
-
 ```
 
 
-```{r}
-
-ProbabilityCalculator <- function(Level, SuccessRate, Enriched){
-  
-  if (Enriched == FALSE){
-    print((1 - SuccessRate)/10)#chance of destroying
-    return((1 - SuccessRate) * 0.9 / Level)#chance of falling down to each level
-  }
-  if (Enriched == TRUE){
-  
-    if (Level == 4){
-      return((1 - SuccessRate) * 0.978 / Level)#chance of falling down to each level
-      return(1 - SuccessRate)
-    }
-    if (Level == 5){
-      return((1 - SuccessRate) * 0.975 / Level)
-      return(1 - SuccessRate)
-    }
-    if (Level == 6){
-      return((1 - SuccessRate) * 0.971 / Level)
-      return(1 - SuccessRate)
-    }
-    if (Level == 7){
-      return((1 - SuccessRate) * 0.967 / Level)
-      return(1 - SuccessRate)
-    }
-    if (Level == 8){
-      return((1 - SuccessRate) * 0.96 / Level)
-      return(1 - SuccessRate)
-    }
-    if (Level == 9){
-      return((1 - SuccessRate) * 0.95 / Level)
-      return(1 - SuccessRate)
-    }
-  }
-}
-```
 
 
 
 ```{r}
 
-ProbabilityCalculator2 <- function(Level, Enriched){ #Enriched should be TRUE or FALSE, Level should be the level of refine you currently are.
+ProbabilityCalculator <- function(Level, Enriched){ #Enriched should be TRUE or FALSE, Level should be the level of refine you currently are.
   
   EnrichedSuccessChance <- c(1 , 1 , 1 , 0.9629 , 0.784 , 0.561 , 0.3627 , 0.2372 , 0.1472 , 0.0904)
   EnrichedBreakChance <- c(0 , 0 , 0 , .02 , .022 , .025 , .029 , .033 , .04 , .05)
@@ -79,27 +39,6 @@ ProbabilityCalculator2 <- function(Level, Enriched){ #Enriched should be TRUE or
   }
 }
 ```
-
-
-```{r}
-
-
-for (i in 1:9){
-  
-
-  print(ProbabilityCalculator2(i, FALSE))
-  
-}
-
-
-
-```
-
-
-
-
-
-
 
 
 ```{r}
@@ -172,8 +111,6 @@ EnrichedLevelTen <-   t(c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1))
 
 EnrichedTotalMatrix <- rbind(EnrichedDestroyed , EnrichedLevelZero , EnrichedLevelOne , EnrichedLevelTwo , EnrichedLevelThree , EnrichedLevelFour , EnrichedLevelFive , EnrichedLevelSix , EnrichedLevelSeven , EnrichedLevelEight , EnrichedLevelNine , EnrichedLevelTen)
   
-  
-#How to construct using a function
 
 
 ```
