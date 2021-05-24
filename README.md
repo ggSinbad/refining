@@ -49,6 +49,13 @@ I then repeated the process, except this time using the probabilties for level 4
 Here the probability of hitting +10 refine starting at no refine is 1 in 140. +7 refine is 7 in 10, +8 refine is 1 in 3, and +9 1 in 14.
 
 
+Finally, I calculated the "optimal" probabilities of hitting each refine. Standard ores have a slightly higher chance of success from level 3 > level 4 compared to enriched ores, so I combined the standard ore probabilities up to level 4 with the enriched ore probabilities. Below is the result.
+
+![image](https://user-images.githubusercontent.com/69298405/119333467-cd885880-bc81-11eb-8287-9de7662f0fb6.png)
+
+You can see that this is a small improvement on using enriched ores only. Notably you have rougly a 5% greater absolute chance to hit level 7 from level 0 compared to only using enriched ores.
+
+
 ## Analysis
 
 After computing these hitting probabilities we have a much better idea of how rare a +10 refined level 4 weapon is. Obtaining one without using any enriched ore would on average destroy around 3800 weapons before obtaining one. This makes one practically impossible to obtain. Even with enriched ore, the probability is around 30 times higher, but needing on average 140 of a level 4 weapon to obtain one +10 is still unfeasible. This does not take into account the enormous costs of ores that would be needed which further compounds how insane it is to +10.
