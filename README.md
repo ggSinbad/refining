@@ -67,7 +67,7 @@ It's worth noting that enriched ores actually perform worse at +3 > +4 by about 
 
 There's still a lot more to be done. The most important task is to calculate the expected cost or "hitting time" for each refine level. As far as I can tell, this cannot be done analytically because the markov chain is reducible. Therefore I would have to move to a simulation based approach, for which I do not know if there exists a package that could do this for me. 
 
-Less important is accounting for a small mechanic - when refining fails 75% of the time the item is broken (not destroyed) and needs to be repaired. The cost of repairing it is fairly small so it can usually be considered negligible. However it is still worth considering when computing the total cost.
+Less important is accounting for a small mechanic - when refining fails, 75% of the time the item is broken (not destroyed) and needs to be repaired. The cost of repairing it is fairly small so it can usually be considered negligible. However it is still worth considering when computing the total cost.
 
 Afterwards, some further analysis comparing the success rate of normal ore vs enriched ore is due. Enriched ore is orders of magnitude more valuable than normal ore, so it should be used sparingly where it will make the most difference. I plan at some point to add a section comparing various rules for when to use enriched ore (+7 only, +8 only ect) and how they perform.
 
