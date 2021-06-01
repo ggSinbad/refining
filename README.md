@@ -49,6 +49,13 @@ I then repeated the process, except this time using the probabilties for level 4
 Here the probability of hitting +10 refine starting at no refine is 1 in 140. +7 refine is 7 in 10, +8 refine is 1 in 3, and +9 1 in 14.
 
 
+Finally, I calculated the "optimal" probabilities of hitting each refine. Standard ores have a slightly higher chance of success from level 3 > level 4 compared to enriched ores, so I combined the standard ore probabilities up to level 4 with the enriched ore probabilities. Below is the result.
+
+![image](https://user-images.githubusercontent.com/69298405/119333467-cd885880-bc81-11eb-8287-9de7662f0fb6.png)
+
+You can see that this is a small improvement on using enriched ores only. Notably you have rougly a 5% greater absolute chance to hit level 7 from level 0 compared to only using enriched ores.
+
+
 ## Analysis
 
 After computing these hitting probabilities we have a much better idea of how rare a +10 refined level 4 weapon is. Obtaining one without using any enriched ore would on average destroy around 3800 weapons before obtaining one. This makes one practically impossible to obtain. Even with enriched ore, the probability is around 30 times higher, but needing on average 140 of a level 4 weapon to obtain one +10 is still unfeasible. This does not take into account the enormous costs of ores that would be needed which further compounds how insane it is to +10.
@@ -60,7 +67,8 @@ It's worth noting that enriched ores actually perform worse at +3 > +4 by about 
 
 There's still a lot more to be done. The most important task is to calculate the expected cost or "hitting time" for each refine level. As far as I can tell, this cannot be done analytically because the markov chain is reducible. Therefore I would have to move to a simulation based approach, for which I do not know if there exists a package that could do this for me. 
 
-Less important is accounting for a small mechanic - when refining fails 75% of the time the item is broken (not destroyed) and needs to be repaired. The cost of repairing it is fairly small so it can usually be considered negligible. However it is still worth considering when computing the total cost.
+Less important is accounting for a small mechanic - when refining fails, 75% of the time the item is broken (not destroyed) and needs to be repaired. The cost of repairing it is fairly small so it can usually be considered negligible. However it is still worth considering when computing the total cost.
 
-Finally, some further analysis comparing the success rate of normal ore vs enriched ore is due. Enriched ore is orders of magnitude more valuable than normal ore, so it should be used sparingly where it will make the most difference. I plan at some point to add a section comparing various rules for when to use enriched ore (+7 only, +8 only ect) and how they perform.
+Afterwards, some further analysis comparing the success rate of normal ore vs enriched ore is due. Enriched ore is orders of magnitude more valuable than normal ore, so it should be used sparingly where it will make the most difference. I plan at some point to add a section comparing various rules for when to use enriched ore (+7 only, +8 only ect) and how they perform.
 
+Once all of the above is done, I can make a calculator that takes item value, oridecon/elunium value and enriched ore values to calculate what is the cheapest way to hit a certain refine level. For high cost items, using more enriched ores would be optimal, whereas for low cost items using more oridecon may be cheaper.
