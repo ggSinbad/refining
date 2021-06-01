@@ -150,3 +150,46 @@ enrichedhitprob <- hittingProbabilities(emcRefining)
 
 ```
 
+
+```{r}
+
+
+voi <- hitprob[2,6:12]
+
+evoi <- enrichedhitprob[2,6: 12]
+
+y1 <- 1/voi
+
+y2 <- 1/evoi
+
+
+
+x1 <- c(4:10)
+
+plot( x1, y1, type="l", col="red" , log="y")
+par(new=TRUE)
+plot( x1, y2, type="l", col="green" , log="y" )
+
+```
+
+
+```{r}
+
+y3 <- y1 /y2
+
+plot( x1, y3, type="l", col="red" )
+
+
+```
+
+```{r}
+
+
+OptimalTotalMatrix <- rbind(TotalMatrix[1:5,] , EnrichedTotalMatrix[6:12,])   #this makes a matrix with slightly higher probability for the level 3 > level 4 transition.
+
+OptimalMarkovChain <- new("markovchain" , states = c("Destroyed" , "No Refine" , "+1" , "+2" , "+3" , "+4" , "+5" , "+6" , "+7" , "+8" , "+9" , "+10") , byrow = TRUE , transitionMatrix = OptimalTotalMatrix , name = "OptimalRefining")
+
+optimalhitprob <- hittingProbabilities(OptimalMarkovChain)
+
+```
+
