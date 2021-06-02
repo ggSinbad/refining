@@ -90,9 +90,7 @@ MCSim3 <- function(TransitionMatrix, StartingState, length){
   
   #TransitionMatrix[CurrentState, ] #this will determine the probability of moving to each state
   
-  StateHistory <- matrix(1, 1 , length + 1) #creates a column vector of length iterations, to store the "history" of the markov chain.
-  
-  StateHistory[1,1] <- StartingState
+  StateHistory <- StartingState
   
   NumberOfStates <- nrow(TransitionMatrix)
   
@@ -105,7 +103,7 @@ MCSim3 <- function(TransitionMatrix, StartingState, length){
     
     print(Example)
     
-    StateHistory[i+1] <- Example
+    StateHistory <- c( StateHistory , Example )
     
   }
   
@@ -113,4 +111,7 @@ MCSim3 <- function(TransitionMatrix, StartingState, length){
   
   
 ```
+
+
+
 
