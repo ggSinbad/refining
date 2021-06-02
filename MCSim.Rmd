@@ -2,7 +2,7 @@
 title: "MCSimulation"
 author: "Alexander Maximiliano Castro Fuentes"
 date: "01/06/2021"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
