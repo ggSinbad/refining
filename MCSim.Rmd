@@ -101,11 +101,11 @@ MCSim3 <- function(TransitionMatrix, StartingState, length){
     
     Example <- sample(NumberOfStates , size = 1 , prob = TransitionMatrix[ StateHistory[i] , ])
     
-    print(Example)
-    
     StateHistory <- c( StateHistory , Example )
     
   }
+  
+  print(StateHistory)
   
 }
   
