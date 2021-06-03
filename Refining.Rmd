@@ -1,8 +1,8 @@
 ---
 title: "Refining"
-author: "Alexander Maximiliano Castro Fuentes"
+author: "Sinbad"
 date: "30/10/2020"
-output: pdf_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
