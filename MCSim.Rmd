@@ -122,7 +122,7 @@ IsAbsorbing <- function(TransitionMatrix){
   
   for (i in 1:NumberOfStates){
     
-    is.element(1 , TransitionMatrix[ i , ])
+    print(TransitionMatrix[ i , i ] == 1)
     
     
     
