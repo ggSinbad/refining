@@ -120,21 +120,66 @@ IsAbsorbing <- function(TransitionMatrix){
   
   NumberOfStates <- nrow(TransitionMatrix)
   
+  abs <- c()
+  
   for (i in 1:NumberOfStates){
     
-    print(TransitionMatrix[ i , i ] == 1)
+    if(TransitionMatrix[ i , i ] == 1){
+      
     
+      
+      abs <- c(abs, i)
+      
+      
+    }
     
     
   }
   
-  
+  return(abs)
 }
 
 
 ```
 
 
+
+```{r}
+
+MCSim4 <- function(TransitionMatrix, StartingState, length){
+  
+  
+  #TransitionMatrix[CurrentState, ] #this will determine the probability of moving to each state
+  
+  StateHistory <- StartingState
+  
+  NumberOfStates <- nrow(TransitionMatrix)
+  
+  AbStates <- IsAbsorbing(TransitionMatrix)
+  
+  
+  
+  for (i in 1:length){
+    
+    if (any(is.element(AbStates, StateHistory))==TRUE){
+      
+      print('Early termination as reached an absorbingstate')
+      
+      return(StateHistory)
+    }
+    
+    Example <- sample(NumberOfStates , size = 1 , prob = TransitionMatrix[ StateHistory[i] , ])
+    
+    StateHistory <- c( StateHistory , Example )
+    
+  }
+  
+  print(StateHistory)
+  
+}
+  
+  
+```
 
 
 
