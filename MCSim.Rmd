@@ -105,7 +105,7 @@ MCSim3 <- function(TransitionMatrix, StartingState, length){
     
   }
   
-  print(StateHistory)
+  return(StateHistory)
   
 }
   
@@ -163,7 +163,7 @@ MCSim4 <- function(TransitionMatrix, StartingState, length){
     
     if (any(is.element(AbStates, StateHistory))==TRUE){
       
-      print('Early termination as reached an absorbingstate')
+      print('Early termination as reached an absorbing state')
       
       return(StateHistory)
     }
@@ -174,12 +174,51 @@ MCSim4 <- function(TransitionMatrix, StartingState, length){
     
   }
   
-  print(StateHistory)
+  return(StateHistory)
   
 }
   
   
 ```
+
+
+
+```{r}
+
+
+MCSim5 <- function(TransitionMatrix, StartingState, length, repetitions){
+  
+  
+  
+  reps <- c()
+  
+  for (i in 1:repetitions){
+    
+    reps <- cbind(reps , MCSim3(TransitionMatrix, StartingState, length))
+    
+    
+  }
+  
+  
+  return(reps)
+  
+  
+  
+}
+
+
+
+
+
+
+```
+
+
+
+
+
+
+
 
 
 
