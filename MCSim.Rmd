@@ -216,9 +216,68 @@ MCSim5 <- function(TransitionMatrix, StartingState, length, repetitions){
 
 
 
+```{r}
+
+MCSim6 <- function(TransitionMatrix, StartingState, length){
+  
+  
+  #TransitionMatrix[CurrentState, ] #this will determine the probability of moving to each state
+  
+  StateHistory <- StartingState
+  
+  NumberOfStates <- nrow(TransitionMatrix)
+  
+  AbStates <- IsAbsorbing(TransitionMatrix)
+  
+  
+  
+  for (i in 1:length){
+    
+    if (any(is.element(AbStates, StateHistory))==TRUE){
+      
+      print('Early termination as reached an absorbing state')
+      
+      print(length - length(StateHistory))
+      
+      return(StateHistory)
+    }
+    
+    Example <- sample(NumberOfStates , size = 1 , prob = TransitionMatrix[ StateHistory[i] , ])
+    
+    StateHistory <- c( StateHistory , Example )
+    
+  }
+  
+  return(StateHistory)
+  
+}
+  
+  
+```
 
 
 
+```{r}
 
+
+LengthFixer <- function(Vector, DesiredLength){
+  
+  currentlength <- length(Vector)
+  
+  difference <- DesiredLength - currentlength
+  
+  ending <- rep(Vector[currentlength] , difference)
+  
+  Vector <- c(Vector, ending)
+  
+  return(Vector)
+}
+  
+  
+  
+
+
+
+```
 
 
