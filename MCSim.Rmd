@@ -235,9 +235,8 @@ MCSim6 <- function(TransitionMatrix, StartingState, length){
     
     if (any(is.element(AbStates, StateHistory))==TRUE){
       
-      print('Early termination as reached an absorbing state')
       
-      print(length - length(StateHistory))
+      StateHistory <- LengthFixer(StateHistory, length +1)
       
       return(StateHistory)
     }
@@ -280,4 +279,99 @@ LengthFixer <- function(Vector, DesiredLength){
 
 ```
 
+
+```{r}
+
+MCSim7 <- function(TransitionMatrix, StartingState, length, repetitions){
+  
+  
+  
+  reps <- c()
+  
+  for (i in 1:repetitions){
+    
+    reps <- cbind(reps , MCSim6(TransitionMatrix, StartingState, length))
+    
+    
+  }
+  
+  
+  return(reps)
+  
+  
+  
+}
+
+
+
+
+
+
+```
+
+
+
+```{r}
+
+
+totalnines <- c()
+firstnine <- c()
+
+for (i in 1:10000){
+  
+  
+  
+  totalnines <- c(totalnines, is.element(9, testerer2[,i]))
+  firstnine <- c(firstnine, match(9 , testerer2[,i]))
+  
+}
+
+averagenine <- sum(firstnine, na.rm=TRUE) / sum(totalnines)
+
+print(averagenine)
+```
+
+
+```{r}
+
+totaltens <- c()
+firstten <- c()
+
+for (i in 1:10000){
+  
+  
+  
+  totaltens <- c(totaltens, is.element(10, testerer2[,i]))
+  firstten <- c(firstten, match(10 , testerer2[,i]))
+  
+}
+
+averageten <- sum(firstten, na.rm=TRUE) / sum(totaltens)
+
+print(averageten)
+
+
+```
+
+```{r}
+
+totalelevens <- c()
+firsteleven <- c()
+
+for (i in 1:10000){
+  
+  
+  
+  totalelevens <- c(totalelevens, is.element(11, testerer2[,i]))
+  firsteleven <- c(firsteleven, match(11 , testerer2[,i]))
+  
+}
+
+averageeleven <- sum(firsteleven, na.rm=TRUE) / sum(totalelevens)
+
+print(averageeleven)
+
+
+
+```
 
