@@ -375,3 +375,7 @@ print(averageeleven)
 
 ```
 
+```{r}
+binom.test(sum(totalnines) , 10000, 0.3464704)
+```
+
