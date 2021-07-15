@@ -9,114 +9,12 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
-
-MCSim <-function(TransitionMatrix , StartingState){
-  
-  
-  
-  
-  #TransitionMatrix[CurrentState, ] #this will determine the probability of moving to each state
-  
-  #StateHistory <- matrix(0, 1 , 11) #creates a column vector of length iterations, to store the "history" of the markov chain.
-  
-  #StateHistory[1,1] <- StartingState
-  
-  NumberOfStates <- nrow(TransitionMatrix)
-  
-  CurrentState <- StartingState
-  
-  
-  for (i in 1:10){
-    
-    Example <- sample(NumberOfStates , size = 1 , prob = TransitionMatrix[CurrentState , ])
-    
-    print(Example)
-    
-    CurrentState <- Example
-    
-  }
-  
-}
-
-
-
-```
-
 
 
 
 ```{r}
 
-MCSim2 <-function(TransitionMatrix , StartingState){
-  
-  
-  
-  
-  #TransitionMatrix[CurrentState, ] #this will determine the probability of moving to each state
-  
-  StateHistory <- matrix(1, 1 , 11) #creates a column vector of length iterations, to store the "history" of the markov chain.
-  
-  StateHistory[1,1] <- StartingState
-  
-  NumberOfStates <- nrow(TransitionMatrix)
-  
-  CurrentState <- StartingState
-  
-  
-  for (i in 1:10){
-    
-    Example <- sample(NumberOfStates , size = 1 , prob = TransitionMatrix[ StateHistory[i] , ])
-    
-    print(Example)
-    
-    StateHistory[i+1] <- Example
-    
-  }
-  
-}
-
-
-
-```
-
-
-
-
-```{r}
-
-MCSim3 <- function(TransitionMatrix, StartingState, length){
-  
-  
-  #TransitionMatrix[CurrentState, ] #this will determine the probability of moving to each state
-  
-  StateHistory <- StartingState
-  
-  NumberOfStates <- nrow(TransitionMatrix)
-  
-  
-  
-  
-  for (i in 1:length){
-    
-    Example <- sample(NumberOfStates , size = 1 , prob = TransitionMatrix[ StateHistory[i] , ])
-    
-    StateHistory <- c( StateHistory , Example )
-    
-  }
-  
-  return(StateHistory)
-  
-}
-  
-  
-```
-
-
-
-```{r}
-
-IsAbsorbing <- function(TransitionMatrix){
+IsAbsorbing <- function(TransitionMatrix){   #this tells us if a state in the transition matrix is absorbing or not - ie if the chance of moving from state a to state a on the next step is 1.
   
   NumberOfStates <- nrow(TransitionMatrix)
   
@@ -139,102 +37,51 @@ IsAbsorbing <- function(TransitionMatrix){
   return(abs)
 }
 
+#the purpose of this function is so that we don't keep simulating when we know the MC is in an absorbing state. this will cut down the computation time
 
 ```
 
 
+```{r}
+
+
+LengthFixer <- function(Vector, DesiredLength){ #
+  
+  currentlength <- length(Vector)
+  
+  difference <- DesiredLength - currentlength
+  
+  ending <- rep(Vector[currentlength] , difference)
+  
+  Vector <- c(Vector, ending)
+  
+  return(Vector)
+}
+  
+  #terminating the simulation early for absorbing states will result in output vectors of different lengths. this fixes a vector to a given length so that we can put them all in a matrix for analysis
+  
+
+
+
+```
+
 
 ```{r}
 
-MCSim4 <- function(TransitionMatrix, StartingState, length){
+MCSim <- function(TransitionMatrix, StartingState, length){
   
   
-  #TransitionMatrix[CurrentState, ] #this will determine the probability of moving to each state
-  
-  StateHistory <- StartingState
+  StateHistory <- StartingState #initialised vector where we will store results
   
   NumberOfStates <- nrow(TransitionMatrix)
   
-  AbStates <- IsAbsorbing(TransitionMatrix)
+  AbStates <- IsAbsorbing(TransitionMatrix) #vector of absorbing states in transition matrix
   
   
   
-  for (i in 1:length){
+  for (i in 1:length){ 
     
-    if (any(is.element(AbStates, StateHistory))==TRUE){
-      
-      print('Early termination as reached an absorbing state')
-      
-      return(StateHistory)
-    }
-    
-    Example <- sample(NumberOfStates , size = 1 , prob = TransitionMatrix[ StateHistory[i] , ])
-    
-    StateHistory <- c( StateHistory , Example )
-    
-  }
-  
-  return(StateHistory)
-  
-}
-  
-  
-```
-
-
-
-```{r}
-
-
-MCSim5 <- function(TransitionMatrix, StartingState, length, repetitions){
-  
-  
-  
-  reps <- c()
-  
-  for (i in 1:repetitions){
-    
-    reps <- cbind(reps , MCSim3(TransitionMatrix, StartingState, length))
-    
-    
-  }
-  
-  
-  return(reps)
-  
-  
-  
-}
-
-
-
-
-
-
-```
-
-
-
-
-```{r}
-
-MCSim6 <- function(TransitionMatrix, StartingState, length){
-  
-  
-  #TransitionMatrix[CurrentState, ] #this will determine the probability of moving to each state
-  
-  StateHistory <- StartingState
-  
-  NumberOfStates <- nrow(TransitionMatrix)
-  
-  AbStates <- IsAbsorbing(TransitionMatrix)
-  
-  
-  
-  for (i in 1:length){
-    
-    if (any(is.element(AbStates, StateHistory))==TRUE){
-      
+    if (any(is.element(AbStates, StateHistory))==TRUE){ #at any point in the simulation if an element of the output vector is an absorbing state the simulation ends early
       
       StateHistory <- LengthFixer(StateHistory, length +1)
       
@@ -251,38 +98,17 @@ MCSim6 <- function(TransitionMatrix, StartingState, length){
   
 }
   
-  
+
 ```
+
+
+
 
 
 
 ```{r}
 
-
-LengthFixer <- function(Vector, DesiredLength){
-  
-  currentlength <- length(Vector)
-  
-  difference <- DesiredLength - currentlength
-  
-  ending <- rep(Vector[currentlength] , difference)
-  
-  Vector <- c(Vector, ending)
-  
-  return(Vector)
-}
-  
-  
-  
-
-
-
-```
-
-
-```{r}
-
-MCSim7 <- function(TransitionMatrix, StartingState, length, repetitions){
+MCSimRepeater <- function(TransitionMatrix, StartingState, length, repetitions){ #to make our results useful, we run MCSim many times and collate the results for analysis. this function does this.
   
   
   
@@ -290,7 +116,7 @@ MCSim7 <- function(TransitionMatrix, StartingState, length, repetitions){
   
   for (i in 1:repetitions){
     
-    reps <- cbind(reps , MCSim6(TransitionMatrix, StartingState, length))
+    reps <- cbind(reps , MCSim(TransitionMatrix, StartingState, length))
     
     
   }
@@ -298,16 +124,56 @@ MCSim7 <- function(TransitionMatrix, StartingState, length, repetitions){
   
   return(reps)
   
+}
+```
+
+
+```{r}
+
+hittingProbabilityCalculator <- function(SimResults , State) { # given simulation results and a state, find the probability that the state is reached. (hitting probability)
+
   
+  totalOccurence <- c()
+  for (i in 1:ncol(SimResults)) {
+    totalOccurence <- c(totalOccurence , is.element(State, SimResults[,i]))
+    
+    
+  }
+  return(sum(totalOccurence)/ncol(SimResults))
+}
+
+  
+```
+
+
+
+
+```{r}
+
+hittingTimeCalculator <- function(SimResults, State){
+  
+  totalOccurence <- c()
+  firstOccurence <- c()
+  
+  for (i in 1:ncol(SimResults)){
+    
+    totalOccurence <- c(totalOccurence , is.element(State , SimResults[,i]))
+    firstOccurence <-c(firstOccurence , match(State , SimResults[,i]))
+  }
+  
+  return(sum(firstOccurence ,  na.rm=TRUE) / sum(totalOccurence))
   
 }
 
 
 
-
-
-
 ```
+
+
+
+
+
+
 
 
 

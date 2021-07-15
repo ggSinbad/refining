@@ -134,19 +134,6 @@ hitprob <- hittingProbabilities(mcRefining)
 ```
 
 
-```{r}
-
-
-mcgraph <- as(mcRefining, "igraph")
-
-
-plot(mcgraph)
-
-line_graph(mcgraph)
-
-```
-
-
 
 
 
