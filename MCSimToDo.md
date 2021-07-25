@@ -4,6 +4,6 @@
 
 ~~3. Create a new function that repeats MCSim a set number of times and allows us to find hitting probability over a large sample.~~
 
-4. Check hitting probabilities against the analytical approach to ensure the results are correct.
+~~4. Check hitting probabilities against the analytical approach to ensure the results are correct.~~
 
-5. Calculate mean first passage times (hitting times)
+~~5. Calculate mean first passage times (hitting times)~~
